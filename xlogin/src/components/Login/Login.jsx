@@ -5,12 +5,15 @@ const Login = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
+    const [login, setLogin] = useState(false);
 
     const handleLogin = (event) => {
         event.preventDefault();
-        if(username==="user" && password==="password") {
-            setError("Welcome, user!");
+        if (username === "user" && password === "password") {
+            setLogin(true);
+            setError("");
         } else {
+            setLogin(false);
             setError("Invalid username or password");
         }
     }
@@ -26,17 +29,24 @@ const Login = () => {
     return (
         <div>
             <h1>Login Page</h1>
-            { !error ? (
-            <form onSubmit={handleLogin}>
-                <label htmlFor="user">Username:</label>
-                <input type="text" name="user" id="user" value={username} onChange={handleUser} required />
-                <label htmlFor="password">Password:</label>
-                <input type="text" name="password" id="password" value={password} onChange={handlePass} required />
-                <button type="submit">Submit</button>
-            </form>
+            {!login ? (
+                <form onSubmit={handleLogin}>
+                    {!!error && (<p>{error}</p>)}
+                    <div>
+                        <label htmlFor="user">Username:</label>
+                        <input type="text" name="user" id="user" placeholder='username' value={username} onChange={handleUser} required />
+                    </div>
+                    <div>
+                        <label htmlFor="password">Password:</label>
+                        <input type="password" name="password" id="password" placeholder='password' value={password} onChange={handlePass} required />
+                    </div>
+                    <div>
+                    <button type="submit">Submit</button>
+                    </div>
+                </form>
             ) : (
-                <p>{error}</p>
-            ) }
+                <p>Welcome, user!</p>
+            )}
         </div>
     )
 }
